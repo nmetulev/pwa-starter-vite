@@ -1,5 +1,14 @@
 import { LitElement, css, html } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
+import {
+  provideFluentDesignSystem,
+  fluentAnchor,
+} from "@fluentui/web-components";
+
+provideFluentDesignSystem()
+    .register(
+        fluentAnchor(),
+    );
 
 @customElement('app-header')
 export class AppHeader extends LitElement {

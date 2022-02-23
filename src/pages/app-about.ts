@@ -1,6 +1,16 @@
 import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
+import {
+  provideFluentDesignSystem,
+  fluentCard,
+} from "@fluentui/web-components";
+
+provideFluentDesignSystem()
+    .register(
+        fluentCard(),
+    );
+
 @customElement('app-about')
 export class AppAbout extends LitElement {
   static get styles() {

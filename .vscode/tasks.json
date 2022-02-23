@@ -2,9 +2,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "npm run dev-task",
+            "label": "npm run dev",
             "type": "npm",
-            "script": "dev-task",
+            "script": "dev",
             "isBackground": true,
             "problemMatcher": {
                 "owner": "custom",
@@ -14,7 +14,7 @@
                 "background": {
                     "activeOnStart": true,
                     "beginsPattern": ".*",
-                    "endsPattern": "created build in .+"
+                    "endsPattern": "ready in .+"
                 }
             },
         },
@@ -30,7 +30,7 @@
             "id": "terminate",
             "type": "command",
             "command": "workbench.action.tasks.terminate",
-            "args": "npm run dev-task"
+            "args": "npm run dev"
         }
     ]
 }

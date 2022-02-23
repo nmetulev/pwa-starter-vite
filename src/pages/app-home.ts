@@ -4,6 +4,20 @@ import { property, customElement } from 'lit/decorators.js';
 // For more info on the @pwabuilder/pwainstall component click here https://github.com/pwa-builder/pwa-install
 import '@pwabuilder/pwainstall';
 
+import {
+  provideFluentDesignSystem,
+  fluentAnchor,
+  fluentButton,
+  fluentCard
+} from "@fluentui/web-components";
+
+provideFluentDesignSystem()
+    .register(
+        fluentAnchor(),
+        fluentButton(),
+        fluentCard()
+    );
+
 @customElement('app-home')
 export class AppHome extends LitElement {
   // For more information on using properties and state in lit
