@@ -19,7 +19,14 @@
             "name": "Launch Microsoft Edge and open the Edge DevTools",
             "request": "launch",
             "type": "vscode-edge-devtools.debug",
-            "url": "" // Provide your project's url to finish configuring
+            "url": ""
+        },
+        {
+            "name": "Attach to Node Functions",
+            "type": "node",
+            "request": "attach",
+            "port": 9229,
+            "preLaunchTask": "func: host start"
         }
     ]
 }

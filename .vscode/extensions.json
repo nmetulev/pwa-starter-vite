@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "ms-azuretools.vscode-azurefunctions",
     "esbenp.prettier-vscode",
     "rvest.vs-code-prettier-eslint",
     "eg2.vscode-npm-script",
