@@ -1,13 +1,15 @@
 import { LitElement, css, html } from 'lit';
-import { property, customElement } from 'lit/decorators.js';
+import { property, customElement, state } from 'lit/decorators.js';
 import {
   provideFluentDesignSystem,
   fluentAnchor,
+  fluentButton
 } from "@fluentui/web-components";
 
 provideFluentDesignSystem()
     .register(
         fluentAnchor(),
+        fluentButton()
     );
 
 @customElement('app-header')
@@ -57,8 +59,24 @@ export class AppHeader extends LitElement {
     `;
   }
 
+  @state() user: any;
+
   constructor() {
     super();
+  }
+
+  async firstUpdated() {
+    this.updateUser();
+  }
+
+  async updateUser() {
+    let userRequest = await fetch('/.auth/me');
+    if (userRequest.status === 200) {
+      try {
+        this.user = await userRequest.json();
+      } catch(e) {}
+    }
+    console.log(this.user);
   }
 
   updated(changedProperties: any) {
@@ -76,8 +94,44 @@ export class AppHeader extends LitElement {
           </fluent-anchor>` : null}
 
           <h1>${this.title}</h1>
+
+          <div>
+            ${this.renderUserInfo()}
+          </div>
         </div>
       </header>
     `;
+  }
+
+  private renderUserInfo() {
+    if (this.user && this.user.clientPrincipal) {
+      return html`
+        <fluent-anchor href="/.auth/logout">
+          ${this.user.clientPrincipal.userDetails}
+        </fluent-anchor>
+      `;
+    } else {
+      return html`
+        <fluent-button @click=${() => this.signIn()}>
+          Sign in
+        </fluent-button>
+      `;
+    }
+  }
+
+  private signIn() {
+    const popup = window.open('/.auth/login/github?post_login_redirect_uri=/done', 'signin', 'height=700,width=500');
+
+    if (popup) {
+      popup.focus()
+
+      popup.addEventListener("unload", () => {
+        console.log(popup.window.location);
+        setTimeout(() => {
+          this.updateUser();
+        }, 1000)
+        // popup.close();
+      });
+    }
   }
 }

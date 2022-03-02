@@ -11,7 +11,28 @@ module.exports = async function (context, req) {
     //     body: responseMessage
     // };
 
-    context.res.json({
-        text: "Hello from the API"
-    });
+    //
+
+    let clientPrincipal;
+
+    const header = req.headers['x-ms-client-principal'];
+    if (header) {
+        const encoded = Buffer.from(header, 'base64');
+        const decoded = encoded.toString('ascii');
+        clientPrincipal = JSON.parse(decoded);
+    }
+
+    if (clientPrincipal) {
+        context.bindings.userDocument = {
+            id: clientPrincipal.userId,
+            ...clientPrincipal
+        }
+        context.res.json({
+            text: "You are signed in mr. " + clientPrincipal.userDetails
+        });
+    } else {
+        context.res.json({
+            text: "You are not signed in."
+        })
+    }
 }

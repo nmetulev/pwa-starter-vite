@@ -190,10 +190,17 @@ export class AppHome extends LitElement {
           </fluent-card>
 
           <fluent-anchor href="/about" appearance="accent">Navigate to About</fluent-anchor>
+          <fluent-button @click=${() => this.callAPI()}>Call API</fluent-button>
         </div>
 
         <pwa-install>Install PWA Starter</pwa-install>
       </div>
     `;
+  }
+
+  async callAPI() {
+    const response = await fetch('/api/test');
+    const data = await response.json();
+    console.log(data);
   }
 }
